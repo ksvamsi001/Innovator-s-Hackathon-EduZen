@@ -1,0 +1,105 @@
+{% extends "student/base.html" %}
+
+{% block title %}
+    User - Exam Page
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{url_for('static', filename='student/styles/exam.css')}}">
+    <style>
+        .loading-screen {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: radial-gradient(#4505e7, #2103a5);
+        color: white;
+        font-size: 24px;
+        text-align: center;
+        z-index: 9999;
+        flex-direction: column; /* Display loading screen as a column */
+        justify-content: center; /* Center elements vertically */
+        align-items: center; 
+    }
+
+    
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="loading-screen" id="loadingScreen">
+        <!-- <img src="{{url_for('static', filename='student/images/loader.gif')}}" alt="loader"> -->
+        Submitting Your Answers...
+    </div>
+    <section id="content">
+        <p id="ques" style="display: none; visibility: hidden;">{{ques}}</p>
+
+        <div class="upper-content">
+            <h5> <a href="#" id="exit-link"><i class="fa-solid fa-arrow-left"></i> Exit</a></h5>
+        </div>
+
+        <div class="body-content">
+            <div class="box1">
+                <h1> Question Analysis</h1>
+                <div class="topic">
+                    <div class="row1-topic">
+                        <div class="Answered"></div>
+
+                        <div class="Not-Answered"></div>
+
+                        <div class="review"></div>
+                    </div>
+                    <div class="row2-topic">
+                        <div class="topic-content">
+                            <p>Answered</p>
+                            <p>Not-Answered</p>
+                            <p>Marked for Review</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="inner-box1">
+                    <div id="questionButtons"></div>
+                </div>
+                
+            </div>
+
+            <div class="box3">
+                <div class="content">
+                    <div class="inner-content">
+
+                        <div class="row1">
+                            <h2 id="questionNo">Question No: 1</h2>
+                        </div>
+
+                        <div class="row2">
+                            <div class="mark-review" id="markReviewBtn">
+                                <p>Mark for review</p>
+                                <a><i class="fa-solid fa-star" onclick="markQuestion()"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="questions" id="questionsContainer">
+                        <!-- Questions will be dynamically added here -->
+                    </div>
+
+                    <div class="content-button">
+                        <button type="button" class="previous" id="previousBtn" onclick="previousQuestion(); previousQuestion1();"
+                            style="display: none">Previous</button>
+                        <button type="button" class="next" id="nextBtn" onclick="nextQuestion(); nextQuestion1();">Next</button>
+                        <button type="button" class="submit" id="submitButton" onclick="submitQuiz()"
+                            style="display:none">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{{url_for('static', filename='student/scripts/exam.js')}}"></script>
+{% endblock %}

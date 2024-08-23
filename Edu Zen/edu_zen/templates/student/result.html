@@ -1,0 +1,26 @@
+{% extends "student/base.html" %}
+
+{% block title %}
+    User - Result Page
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{url_for('static', filename='student/styles/result.css')}}">
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <h3>Woohoo! You Have Completed the Exam Successfully <a><i class="fa-solid fa-circle-check"></i></a></h3>
+        <div class="button">
+            <form class="re-attempt-form" action="{{url_for('student.exam', id=student_id)}}">
+                <button type="submit" class="re-attempt">Re-Attempt</button>
+            </form>
+            <button type="button" class="exit">Exit</button>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{{url_for('static', filename='student/scripts/result.js')}}"></script>
+{% endblock %}

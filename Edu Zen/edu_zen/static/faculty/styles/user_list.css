@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400..800&display=swap');
+
+body{
+    background-color: #DBCBC8;
+    font-family: "Wix Madefor Display", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.navbar {
+    background-color: #551608;
+}
+
+.navbar a {
+    font-weight: 700;
+}
+
+.content h1 {
+    color: #551608;
+    margin-top: 5vh;
+    margin-left: 10%;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5vh;
+}
+
+.inner-box1{
+    width: 80%; 
+    min-height: 25vh;
+    height: auto;
+    box-shadow: 5px 5px 5px 5px #8f8f8f;
+    background-color: #DBCBC8;
+    border: 1px solid #551608;
+    margin-left: 10%;
+    margin-top: 5vh;
+    padding: 2vh;
+}
+
+.inner-content{
+    display: flex;
+    flex-direction: row;
+    margin-top: 3vh;
+    margin-bottom: -2vh;
+}
+
+.circle-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    font-size: 24px;
+    position: relative;
+    margin-left: 40vh;
+}
+
+
+
+svg {
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    z-index: 0; /* Ensure the SVG is behind the text */
+}
+
+circle {
+    fill: rgb(230, 230, 230);
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dasharray 0.5s ease-in-out, stroke 0.5s ease-in-out;
+}
+
+.percentage-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.0em;
+    font-weight: 600;
+    font-family: Inter;
+    z-index: 1; /* Ensure the text is above the SVG */
+    pointer-events: none; /* Ensure the text does not interfere with any click events on the SVG */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+.navbar i {
+    color: black;
+    font-size: 25px;
+    margin-right: 2vh;
+}
+
+.navbar a {
+    font-weight: 700;
+}
+
+
+.btn-group {
+    margin-left: 99%;
+    margin-top: -30vh;
+    background-color: #EE4B2B;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+}
+
+.btn-group i{
+    font-size: 35px;
+    border-radius: 100%;
+    
+}
+
+.view-btn {
+    margin-left: 99%;
+    background-color: green;
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    margin-top: -10vh;
+}
+
+.view-btn i{
+    margin-left: 0.5vh;
+    font-size: 35px;
+    border-radius: 100%;
+}
+
+.inner-content .left{
+    width: 50% !important;
+}
+.content .header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.add-user{
+    margin-top: 6vh;
+    margin-right: 22vh;
+}
+
+.add{
+    height: 5vh;
+    border-radius: 5px;
+    border-style: none;
+    font-size: 20px;
+    background-color: green;
+    color: white;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.error-border {
+    border: 1px solid red !important;
+}
+
+@media (max-width:1300px) {
+
+    .inner-box1 h2 {
+        font-size: 24px;
+    }
+    .circle-container{
+        margin-left: 30vh;
+    }
+
+}
+
+@media (max-width:1000px) {
+
+    .inner-box1 h2{
+        font-size: 20px;
+    }
+    .add-user{
+        margin-right: 15vh;
+    }
+    .inner-content {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width:800px) {
+    .inner-box1{
+        height: auto;
+        min-height: 45vh;
+    }
+  
+    .btn-group{
+        margin-top: -35vh;
+        margin-left: 97%;
+    }
+    .view-btn{
+        margin-top: -35vh;
+        margin-left: 97%;
+    }
+    .circle-container {
+        margin-left: 15%;
+    }
+
+    .content h1 {
+        font-size: 25px;
+    }
+    .add-user{
+        margin-right: 10vh;
+    }
+    .right{
+        margin-top: 4vh;
+    }
+    .btn-group{
+        margin-top: -55vh;
+    }
+    .view-btn {
+        margin-top: -15vh;
+    }
+    .circle-container{
+        margin-bottom: 3vh;
+    }
+}
+
+@media (max-width:600px){
+    .btn-group{
+        width: 50px;
+        height: 50px;
+    }
+    .btn-group i{
+        font-size: 25px;
+    }
+    .view-btn{
+        width: 50px;
+        height: 50px;
+    }
+    .view-btn i{
+        font-size: 25px;
+    }
+}
+
+@media (max-width:450px) {
+
+    .inner-box1{
+        height: auto;
+    }
+    .inner-content{
+        display: flex;
+        flex-direction: column;
+    }
+    .content h1{
+        font-size: 20px;
+    }
+    .add{
+        font-size: 15px;
+    }
+    .inner-box1 h2 {
+        font-size: 15px;
+    }
+}
+
+
+.nothing{
+    height: 100%;
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

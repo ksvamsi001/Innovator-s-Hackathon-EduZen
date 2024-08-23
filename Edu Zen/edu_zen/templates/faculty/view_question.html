@@ -1,0 +1,243 @@
+{% extends "faculty/base.html" %}
+
+{% block title %}
+    faculty - All Questions
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{url_for('static', filename='faculty/styles/view_question.css')}}">
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="header">
+            <h1>QUESTIONS PAGE</h1>
+        </div>
+        <div class="box">
+            {% if mcq_ques %}
+                <div class="inner-box1">
+                    <h1>MCQ QUESTIONS</h1>
+                    {% for mcq in mcq_ques %}
+                        <div class="inner-box1">
+                                <h2>{{mcq.get('question')}}</h2><br>
+                                {% for option in mcq.get('all_options') %}
+                                    <div class="pair">
+                                        {% if option in mcq.get('crct_options') %}
+                                            <input type="checkbox" class="checkbox" checked onclick="javascript: return false;">
+                                        {% else %}
+                                            <input type="checkbox" class="checkbox" onclick="javascript: return false;">
+                                        {% endif %}
+                                        <label>{{ option }}</label><br>
+                                    </div>
+                                {% endfor %}
+                                <form class="delete-form" action="{{url_for('faculty.delete_ques', id=mcq._id)}}" method="POST">
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn text-light del" data-toggle="modal">
+                                                        <i class="fa-solid fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if para_ques %}
+                <div class="inner-box1">
+                    <h1>PARAGRAPH QUESTIONS</h1>
+                    {% for para in para_ques %}
+                        <div class="inner-box1">
+                            <h2>{{para.get('question')}}</h2><br>
+                            <textarea class="para-text" readonly>{{para.get('crct_answer')}}</textarea><br>
+                            <form class="delete-form" action="{{url_for('faculty.delete_ques', id=para._id)}}" method="POST">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn text-light del" data-toggle="modal">
+                                                    <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+
+            {% if rating_ques %}
+                <div class="inner-box1">
+                    <h1>RATING TYPE QUESTIONS</h1>
+                    {% for rating in rating_ques %}
+                        <div class="inner-box1">
+                            <h2>{{ rating.get('question') }}</h2>
+                            <div class="rating-option">
+                                {% for option, value in rating.get('rated_options').items() %}
+                                    <div class="rating-box">
+                                        <div class="stars" data-rating="{{ value }}">
+                                            <div class="left-ques">
+                                                <label>{{ option }}</label>
+                                            </div>
+                                            <div class="right-ques">
+                                                {% for i in range(1, 6) %}
+                                                    <i class="fa-solid fa-star {% if i <= value %}active{% endif %} unselectable"></i>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <form class="delete-form" action="{{url_for('faculty.delete_ques', id=rating._id)}}" method="POST">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn text-light del" data-toggle="modal">
+                                                    <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if choose_ques %}
+                <div class="inner-box1">
+                    <h1>CHOOSE ONE QUESTIONS</h1>
+                    {% for choose in choose_ques %}
+                        <div class="inner-box1">
+                            <h2>{{choose.get('question')}}</h2><br>
+                            {% for option in choose.get('all_options') %}
+                                <div class="pair">
+                                    {% if option == choose.get('crct_option') %}
+                                        <input type="radio" class="checkbox" checked onclick="javascript: return false;">
+                                    {% else %}
+                                        <input type="radio" class="checkbox" onclick="javascript: return false;">
+                                    {% endif %}
+                                    <label>{{ option }}</label><br>
+                                </div>
+                                {% endfor %}
+                                <form class="delete-form" action="{{url_for('faculty.delete_ques', id=choose._id)}}" method="POST">
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn text-light del" data-toggle="modal">
+                                                        <i class="fa-solid fa-minus"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if not mcq_ques and not para_ques and not rating_ques and not choose_ques %}
+            <div class="nothing">
+                <h1>Nothing Created</h1>
+                <a href="{{url_for('faculty.create_question')}}"><button class="nothing-btn">Create here</button></a>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="{{url_for('static', filename='faculty/scripts/view_question.js')}}"></script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions</title>
+
+   
+    <!-- Include SweetAlert library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+    <style>
+
+    </style>
+
+    
+</head>
+
+<body>
+
+    <body>
+
+
+        <nav class="navbar navbar-expand-md  navbar-dark">
+            <a class="navbar-brand" href="#"><img src="{{url_for('static', filename='faculty/images/logo.png')}}" alt="logo" Style="width:200px"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('faculty.user_list')}}">USER LIST</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('faculty.create_question')}}">CREATE QUESTION</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('faculty.view_question')}}">VIEW QUESTION</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('main.home')}}">LOGOUT</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+
+        </div>
+    
+
+
+            <script>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                  {% if messages %}
+                    {% for category, message in messages %}
+                      Swal.fire({
+                        icon: '{{ category }}',
+                        title: '{{ message }}',
+                        showConfirmButton: false,
+                        timer: 3000  // Display time in milliseconds (adjust as needed)
+                      });
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
+              </script>
+    </body>
+
+</html>

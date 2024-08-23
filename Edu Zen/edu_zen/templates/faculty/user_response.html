@@ -1,0 +1,226 @@
+{% extends "faculty/base.html" %}
+
+{% block title %}
+    faculty - {{ student_details.student_name.title() }} Response Page
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{url_for('static', filename='faculty/styles/user_response.css')}}">
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="header">
+            <h1>{{ student_details.student_name.upper() }} RESPONSE PAGE</h1>
+        </div>
+        <div class="box">
+            {% if student_details.rank %}
+                <div class="inner-box1">
+                    <div class="inner-content">
+                        <div class="left">
+                            <h2>NAME : <small> {{student_details["student_name"].title()}}</small></h2>
+                            <h2>REGISTER NO : <small> {{student_details["student_regno"]}}</small></h2>
+                            <h2>DEPARTMENT : <small> {{student_details["student_dept"]}}</small></h2>
+                        </div>
+                        <div class="right">
+                            <div class="circle-container" id="circle">
+                                {% if student_details['attended'] %}
+                                    {% if student_details['rank'] %}
+                                        <svg width="200" height="200">
+                                            <circle cx="100" cy="100" r="60" stroke="#f0f0f0" />
+                                        </svg>
+                                        <div class="percentage-text">
+                                                {{student_details['rank']}}%
+                                        </div>
+                                    {% else %}
+                                        <p>Not evaluated survey</p>
+                                    {% endif %}
+                                {% else %}
+                                    <p>Not attended survey</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            {% endif %}
+            {% if mcq_ques %}
+                <div class="inner-box1">
+                    <h1>MCQ QUESTIONS</h1>
+                    {% for mcq in mcq_ques %}
+                        <div class="inner-box1">
+                            <h2>Question : {{mcq.get('question')}}</h2><br>
+                            <div class="answer_set">
+                                <div class="user_answers">
+                                    <h2>User Answer</h2>
+                                    {% for option in mcq.get('all_options') %}
+                                        <div class="pair">
+                                            {% if option in mcq.get('user_answer') %}
+                                                <input type="checkbox" class="checkbox" checked onclick="javascript: return false;">
+                                            {% else %}
+                                                <input type="checkbox" class="checkbox" onclick="javascript: return false;">
+                                            {% endif %}
+                                            <label>{{ option }}</label><br>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="crct_answers">
+                                    <h2>Correct Answer</h2>
+                                    {% for option in mcq.get('all_options') %}
+                                        <div class="pair">
+                                            {% if option in mcq.get('crct_options') %}
+                                                <input type="checkbox" class="checkbox" checked onclick="javascript: return false;">
+                                            {% else %}
+                                                <input type="checkbox" class="checkbox" onclick="javascript: return false;">
+                                            {% endif %}
+                                            <label>{{ option }}</label><br>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if para_ques %}
+                <div class="inner-box1">
+                    <h1>PARAGRAPH QUESTIONS</h1>
+                    {% for para in para_ques %}
+                        <div class="inner-box1">
+                            <h2>Question : {{para.get('question')}}</h2><br>
+                            <div class="answer_set">
+                                <div class="user_answers">
+                                    <h2>User Answer</h2>
+                                    <textarea class="para-text" readonly>{{para.get('user_answer')}}</textarea>
+                                </div>
+                                <div class="crct_answers">
+                                    <h2>Correct Answer</h2>
+                                    <textarea class="para-text" readonly>{{para.get('crct_answer')}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+
+            {% if rating_ques %}
+                <div class="inner-box1">
+                    <h1>RATING TYPE QUESTIONS</h1>
+                    {% for rating in rating_ques %}
+                        <div class="inner-box1">
+                            <h2>Question : {{ rating.get('question') }}</h2>
+                            <div class="answer_set">
+                                <div class="user_answers">
+                                    <h2>User Answer</h2>
+                                    <div class="rating-option">
+                                        {% for option, value in rating.get('user_answer').items() %}
+                                            <div class="rating-box">
+                                                <div class="stars" data-rating="{{ value }}">
+                                                    <div class="left-ques">
+                                                        <label>{{ option }}</label>
+                                                    </div>
+                                                    <div class="right-ques">
+                                                        {% for i in range(1, 6) %}
+                                                            <i class="fa-solid fa-star {% if i <= value %}active{% endif %} unselectable"></i>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="crct_answers">
+                                    <h2>Correct Answer</h2>
+                                    <div class="rating-option">
+                                        {% for option, value in rating.get('rated_options').items() %}
+                                            <div class="rating-box">
+                                                <div class="stars" data-rating="{{ value }}">
+                                                    <div class="left-ques">
+                                                        <label>{{ option }}</label>
+                                                    </div>
+                                                    <div class="right-ques">
+                                                        {% for i in range(1, 6) %}
+                                                            <i class="fa-solid fa-star {% if i <= value %}active{% endif %} unselectable"></i>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% if choose_ques %}
+                <div class="inner-box1">
+                    <h1>CHOOSE ONE QUESTIONS</h1>
+                    {% for choose in choose_ques %}
+                        <div class="inner-box1">
+                            <h2>Question : {{choose.get('question')}}</h2>
+                            <div class="answer_set">
+                                <div class="user_answers">
+                                    <h2>User Answer</h2>
+                                    {% for option in choose.get('all_options') %}
+                                    <div class="pair">
+                                        {% if option == choose.get('user_answer') %}
+                                            <input type="radio" class="checkbox" checked onclick="javascript: return false;">
+                                        {% else %}
+                                            <input type="radio" class="checkbox" onclick="javascript: return false;">
+                                        {% endif %}
+                                        <label>{{ option }}</label><br>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="crct_answers">
+                                    <h2>Correct Answer</h2>
+                                    {% for option in choose.get('all_options') %}
+                                    <div class="pair">
+                                        {% if option == choose.get('crct_option') %}
+                                            <input type="radio" class="checkbox" checked onclick="javascript: return false;">
+                                        {% else %}
+                                            <input type="radio" class="checkbox" onclick="javascript: return false;">
+                                        {% endif %}
+                                        <label>{{ option }}</label><br>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        </div>
+        <form id="update-rank" action="{{url_for('faculty.update_rank', student_id=student_details._id)}}" method="post">
+            <input id="rank-input" name="rank" type="text">
+            <button id="rank-submit" type="submit">Update Mark</button>
+        </form>
+        <form id="go-back-form" action="{{url_for('faculty.user_list')}}">
+            <button type="submit" id="go-back-btn" >Go Back</button>
+        </form> 
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        document.getElementById('update-rank').addEventListener('submit', function(event) {
+    var rankInput = document.getElementById('rank-input').value;
+    if (isNaN(rankInput) || rankInput < 0 || rankInput > 100) {
+        event.preventDefault();
+        Swal.fire({
+            icon: 'warning',
+            title: 'Invalid Input',
+            text: 'Please enter a valid rank between 0 and 100.',
+        });
+    }
+});
+    </script>
+    <script src="{{url_for('static', filename='faculty/scripts/user_list.js')}}"></script>
+{% endblock %}
+

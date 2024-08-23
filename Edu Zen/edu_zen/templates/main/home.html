@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edu Zen</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <link rel="stylesheet" href="{{url_for('static', filename='main/styles/style.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="row1">
+            <div class="bg-img">
+                <img src="{{url_for('static', filename='main/images/background-image.png')}}" alt="bg-img"
+                    style="width: 100%; height: 100vh;">
+            </div>
+        </div>
+        <div class="row2">
+            <div class="inner-box">
+                <div class="logo">
+                    <img src="{{url_for('static', filename='main/images/et-logo.jpg')}}" alt="logo"
+                        style="width: 50px; border-radius: 100%;">
+                    <h1>EduZen</h1>
+                </div>
+
+                <div class="content">
+                    <form id="loginForm" action="{{url_for('student.login_student')}}" method="POST">
+                        <label>Register No:</label><br>
+                        <input type="text" name="regno" id="regno" class="inputField"><br>
+                        <div id="regError" class="error"></div>
+
+                        <label for="password">Password:</label><br>
+                        <input type="password" name="password" id="password" class="inputField">
+                        <i class="fas fa-eye-slash" id="togglePassword"></i>
+                        <div id="passwordError" class="error"></div>
+
+                        <button style="cursor:pointer;" type="submit" class="login">LOGIN</button>
+                    </form>
+
+                    <div class="faculty">
+                        <a href="{{url_for('faculty.user_list')}}">Are You an faculty? <br> Click Here</a>
+                    </div>
+
+                    <!-- <div class="social">
+                        <p>Get Social With Us!</p>
+                        <div class="icon">
+                            <a href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="https://twitter.com/"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="https://www.youtube.com/"><i class="fa-brands fa-youtube"></i></a>
+                        </div>
+                    </div> -->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='main/scripts/script.js')}}"></script>
+    <script>
+        {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        Swal.fire({
+            icon: '{{ category }}',
+            title: '{{ message }}',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </script>
+</body>
+
+</html>

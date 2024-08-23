@@ -1,0 +1,84 @@
+{% extends "faculty/base.html" %}
+
+{% block title %}
+    faculty - User List
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{url_for('static', filename='faculty/styles/user_list.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    {% if users %}
+        <div class="header">
+            <h1>STUDENTS AND THE MARKS OBTAINED</h1>
+
+            <div class="add-user">
+                <button type="button" class="add">+Student</button>
+            </div>
+        </div>
+        <div class="box">
+            {% for user in users %}
+            <div class="inner-box1">
+                <div class="inner-content">
+                    <div class="left">
+                        <h2>NAME : <small> {{user["student_name"].title()}}</small></h2>
+                        <h2>REGISTER NO : <small> {{user["student_regno"]}}</small></h2>
+                        <h2>DEPARTMENT : <small> {{user["student_dept"]}}</small></h2>
+                    </div>
+                    <div class="right">
+                        <div class="circle-container" id="circle">
+                            {% if user['attended'] %}
+                                {% if user['rank'] %}
+                                    <svg width="200" height="200">
+                                        <circle cx="100" cy="100" r="60" stroke="#f0f0f0" />
+                                    </svg>
+                                    <div class="percentage-text">
+                                            {{user['rank']}}%
+                                    </div>
+                                {% else %}
+                                    <p>Not evaluated survey</p>
+                                {% endif %}
+                            {% else %}
+                                <p>Not attended survey</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+                <form class="delete-form" action="{{url_for('faculty.delete_student', id=user._id)}}" method="POST">
+                    <div class="btn-group">
+                        <button type="submit" class="btn text-light del" data-toggle="modal">
+                                        <i class="fa-solid fa-minus"></i>
+                        </button>
+                    </div>
+                </form>
+                {% if user['attended'] %}
+                    <form class="view-form" action="{{url_for('faculty.view_student_response', id=user._id)}}" method="POST">
+                        <div class="view-btn">
+                            <button type="submit" class="btn text-light">
+                                            <i>→</i>
+                            </button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+    <div class="nothing">
+        <h1>No User Created</h1>
+        <div class="add-user" style="margin-right: 0;">
+            <button type="button" class="add">Create here</button>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{{url_for('static', filename='faculty/scripts/user_list.js')}}"></script>
+{% endblock %}
